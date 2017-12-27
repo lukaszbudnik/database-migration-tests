@@ -1,0 +1,30 @@
+version: '3'
+services:
+  ruby:
+    image: "ruby:2.2.9-alpine3.4"
+    stdin_open: true
+    tty: true
+    volumes:
+     - "${CODE_DIR}:/code"
+    links:
+     - postgres
+  golang:
+    image: "golang:1.9.2-alpine3.7"
+    stdin_open: true
+    tty: true
+    volumes:
+     - "${CODE_DIR}:/code"
+    links:
+     - postgres
+  postgres:
+    # uses alpine 3.5
+    image: "postgres:9.6.6-alpine"
+    ports:
+     - "5432:5432"
+  pgadmin:
+    # uses python:2-alpine3.6
+    image: "thajeztah/pgadmin4"
+    ports:
+     - "5050:5050"
+    links:
+     - postgres
